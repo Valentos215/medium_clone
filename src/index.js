@@ -1,10 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import reportWebVitals from "./reportWebVitals";
+import Routes from "./pages/routes";
+import { BrowserRouter } from "react-router-dom";
+import TopBar from "./components/topBar";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const App = () => {
+  return (
+    <div>
+      <BrowserRouter>
+        <TopBar />
+        <Routes />
+      </BrowserRouter>
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />
