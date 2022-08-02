@@ -4,15 +4,16 @@ import reportWebVitals from "./reportWebVitals";
 import Routes from "./pages/routes";
 import { BrowserRouter } from "react-router-dom";
 import TopBar from "./components/topBar";
+import { CurrentUserProvider } from "./contexts/currentUser";
 
 const App = () => {
   return (
-    <div>
+    <CurrentUserProvider>
       <BrowserRouter>
         <TopBar />
         <Routes />
       </BrowserRouter>
-    </div>
+    </CurrentUserProvider>
   );
 };
 
