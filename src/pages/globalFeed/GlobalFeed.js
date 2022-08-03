@@ -2,6 +2,7 @@ import { stringify } from "query-string";
 import { Fragment, useEffect } from "react";
 import ErrorMessage from "../../components/ErrorMessage";
 import Feed from "../../components/Feed";
+import FeedToggler from "../../components/FeedToggler";
 import Loading from "../../components/Loading";
 import Pagination from "../../components/Pagination";
 import PopularTags from "../../components/PopularTags";
@@ -32,6 +33,7 @@ const GlobalFeed = ({ location, match }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
+            <FeedToggler />
             {isLoading && <Loading />}
             {error && <ErrorMessage />}
             {!isLoading && response && (
