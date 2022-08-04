@@ -21,9 +21,7 @@ const Authentication = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const user = isLoading
-      ? { email, password }
-      : { email, password, username };
+    const user = isLogin ? { email, password } : { email, password, username };
     doFetch({
       method: "post",
       data: {
