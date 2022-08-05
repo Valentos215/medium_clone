@@ -1,7 +1,9 @@
 const BackendErrorMessages = ({ backendErrors }) => {
   const errorMessages = Object.keys(backendErrors).map((name) => {
-    const messages = backendErrors[name].join(" ");
-    return `${name} ${messages}`;
+    const isArray = Array.isArray(backendErrors[name]);
+    if (isArray) return `${name} ${backendErrors[name].join(" ")}`;
+    if (name === "message") return backendErrors[name];
+    return `${name} ${backendErrors[name]}`;
   });
   return (
     <ul className="error-messages">
