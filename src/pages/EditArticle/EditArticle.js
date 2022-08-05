@@ -8,39 +8,37 @@ const EditArticle = ({ match }) => {
   const slug = match.params.slug;
   const [CurrentUserState] = useContext(CurrentUserContext);
   const apiUrl = `/articles/${slug}`;
-  const [{ response: fetchArticleResponse }, doFetchArticle] = useFetch(apiUrl);
-  const [
-    { response: updateArticleResponse, error: updateArticleError },
-    doUpdateArticle,
-  ] = useFetch(apiUrl);
+  const [{ response: fetchResponse }, doFetch] = useFetch(apiUrl);
+  const [{ response: updateResponse, error: updateError }, doUpdate] =
+    useFetch(apiUrl);
   const [initialValues, setInitialValues] = useState(null);
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
 
   useEffect(() => {
-    doFetchArticle();
-  }, [doFetchArticle]);
+    doFetch();
+  }, [doFetch]);
 
   useEffect(() => {
-    if (!fetchArticleResponse) return;
+    if (!fetchResponse) return;
     setInitialValues({
-      title: fetchArticleResponse.article.title,
-      description: fetchArticleResponse.article.description,
-      body: fetchArticleResponse.article.body,
-      tagList: fetchArticleResponse.article.tagList,
+      title: fetchResponse.article.title,
+      description: fetchResponse.article.description,
+      body: fetchResponse.article.body,
+      tagList: fetchResponse.article.tagList,
     });
-  }, [fetchArticleResponse]);
+  }, [fetchResponse]);
 
   const handleSubmit = (article) => {
-    doUpdateArticle({
+    doUpdate({
       method: "put",
       data: { article },
     });
   };
 
   useEffect(() => {
-    if (!updateArticleResponse) return;
+    if (!updateResponse) return;
     setIsSuccessfullSubmit(true);
-  }, [updateArticleResponse]);
+  }, [updateResponse]);
 
   if (CurrentUserState.isLoggedIn === false) {
     return <Redirect to="/" />;
@@ -49,7 +47,7 @@ const EditArticle = ({ match }) => {
   return (
     <ArticleForm
       onSubmit={handleSubmit}
-      errors={(updateArticleError && updateArticleError) || {}}
+      errors={(updateError && updateError) || {}}
       initialValues={initialValues}
     />
   );
