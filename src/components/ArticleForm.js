@@ -5,10 +5,11 @@ const ArticleForm = ({ onSubmit, errors, initialValues }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [description, setDescription] = useState("");
-  const [tagList, setTagList] = useState("");
+  const [tagListStr, setTagListStr] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const tagList = tagListStr.split(" ");
     const article = { title, body, description, tagList };
     onSubmit(article);
   };
@@ -18,7 +19,7 @@ const ArticleForm = ({ onSubmit, errors, initialValues }) => {
     setTitle(initialValues.title);
     setBody(initialValues.body);
     setDescription(initialValues.description);
-    setTagList(initialValues.tagList.join(" "));
+    setTagListStr(initialValues.tagList.join(" "));
   }, [initialValues]);
 
   return (
@@ -60,9 +61,9 @@ const ArticleForm = ({ onSubmit, errors, initialValues }) => {
                   <input
                     type="text"
                     className="form-control form-control-lg"
-                    placeholder="Enter tags"
-                    value={tagList}
-                    onChange={(e) => setTagList(e.target.value)}
+                    placeholder="Enter tags separated by spaces"
+                    value={tagListStr}
+                    onChange={(e) => setTagListStr(e.target.value)}
                   />
                 </fieldset>
                 <fieldset className="form-group">

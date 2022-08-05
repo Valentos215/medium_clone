@@ -6,11 +6,13 @@ import TagFeed from "./TagFeed/TagFeed";
 import YourFeed from "./YourFeed/YourFeed";
 import CreateArticle from "./createArticle/CreateArticle";
 import EditArticle from "./EditArticle/EditArticle";
+import Settings from "./Settings/Settings";
 
 const Routes = () => {
   return (
     <Switch>
       <Route path="/" component={GlobalFeed} exact />
+      <Route path="/settings" component={Settings} />
       <Route path="/articles/new" component={CreateArticle} />
       <Route path="/articles/:slug/edit" component={EditArticle} />
       <Route path="/articles/:slug" component={Article} />

@@ -22,6 +22,8 @@ const GlobalFeed = ({ location, match }) => {
     doFetch();
   }, [doFetch, currentPage]);
 
+  console.log(response);
+
   return (
     <div className="home-page">
       <div className="banner">
@@ -40,7 +42,7 @@ const GlobalFeed = ({ location, match }) => {
               <Fragment>
                 <Feed articles={response.articles} />
                 <Pagination
-                  total={response.articlesCount}
+                  total={19 /*response.articlesCount*/}
                   limit={limit}
                   url={match.url}
                   currentPage={currentPage}
