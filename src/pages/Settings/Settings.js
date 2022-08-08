@@ -52,6 +52,7 @@ const Settings = () => {
     dispatch({ type: "SET_AUTHORIZED", payload: response.user });
   }, [response, dispatch]);
 
+  if (!currentUserState.isLoggedIn) return <Redirect to="/" />;
   if (isSuccessfullLogout) return <Redirect to="/" />;
   return (
     <div className="settings-page">

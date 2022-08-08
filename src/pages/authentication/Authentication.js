@@ -10,11 +10,11 @@ const Authentication = (props) => {
   const pageTitle = isLogin ? "Sign in" : "Sign Up";
   const descriptionLink = isLogin ? "/register" : "/login";
   const descriptionText = isLogin ? "Need an account?" : "Have an account?";
-  const apiUrl = isLogin ? "users/login" : "/users";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
+  const apiUrl = isLogin ? "users/login" : "/users";
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
   const [, setToken] = useLocalStorage("token");
   const [, dispatch] = useContext(CurrentUserContext);
@@ -74,7 +74,7 @@ const Authentication = (props) => {
                   <input
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(String(e.target.value))}
                     className="form-control form-control-lg"
                     placeholder="Password"
                   />
