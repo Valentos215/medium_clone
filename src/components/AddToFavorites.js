@@ -13,7 +13,6 @@ const AddToFavorites = ({ isFavorited, favoritesCount, articleSlug }) => {
     ? response.article.favoritesCount
     : favoritesCount;
   const actualIsFavorited = response ? response.article.favorited : isFavorited;
-  console.log(currentUserState.isLoggedIn);
   const handleLike = (e) => {
     if (!currentUserState.isLoggedIn) setWillRedirect(true);
     e.preventDefault();
