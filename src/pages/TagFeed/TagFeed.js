@@ -42,7 +42,7 @@ const TagFeed = ({ location, match }) => {
               <Fragment>
                 <Feed articles={response.articles} />
                 <Pagination
-                  total={response.articlesCount}
+                  total={response.articlesCount + 1}
                   limit={limit}
                   url={match.url}
                   currentPage={currentPage}
