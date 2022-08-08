@@ -22,8 +22,6 @@ const GlobalFeed = ({ location, match }) => {
     doFetch();
   }, [doFetch, currentPage]);
 
-  console.log(response);
-
   return (
     <div className="home-page">
       <div className="banner">
