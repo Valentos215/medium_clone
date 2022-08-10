@@ -4,7 +4,17 @@ import React, { useContext, useState } from "react";
 import { CurrentUserContext } from "../contexts/currentUser";
 import { Redirect } from "react-router-dom";
 
-const AddToFavorites = ({ isFavorited, favoritesCount, articleSlug }) => {
+type AddToFavoritesProps = {
+  isFavorited: boolean;
+  favoritesCount: number;
+  articleSlug: string;
+};
+
+const AddToFavorites: React.FC<AddToFavoritesProps> = ({
+  isFavorited,
+  favoritesCount,
+  articleSlug,
+}) => {
   const [willRedirect, setWillRedirect] = useState(false);
   const [currentUserState] = useContext(CurrentUserContext);
   const apiUrl = `/articles/${articleSlug}/favorite`;
