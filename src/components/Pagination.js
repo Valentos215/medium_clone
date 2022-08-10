@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import { range } from "../utils";
+import { range } from "../utils.ts";
 
 const PaginationItem = ({ page, currentPage, url }) => {
   const liClasses = classNames({

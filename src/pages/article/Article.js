@@ -9,6 +9,7 @@ import useFetch from "../../hooks/useFetch";
 const Article = (props) => {
   const slug = props.match.params.slug;
   const apiUrl = `/articles/${slug}`;
+
   const [
     {
       response: fetchingResponse,
@@ -17,6 +18,7 @@ const Article = (props) => {
     },
     doFetch,
   ] = useFetch(apiUrl);
+
   const [{ response: deletingResponse }, doDelete] = useFetch(apiUrl);
   const [currentUserState] = useContext(CurrentUserContext);
   const [isSuccessfullDelete, setIsSuccessfullDelete] = useState(false);

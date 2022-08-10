@@ -1,6 +1,6 @@
 import useFetch from "../hooks/useFetch";
 import classNames from "classnames";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { CurrentUserContext } from "../contexts/currentUser";
 import { Redirect } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const AddToFavorites = ({ isFavorited, favoritesCount, articleSlug }) => {
     ? response.article.favoritesCount
     : favoritesCount;
   const actualIsFavorited = response ? response.article.favorited : isFavorited;
-  const handleLike = (e) => {
+  const handleLike = (e: React.MouseEvent<HTMLElement>) => {
     if (!currentUserState.isLoggedIn) setWillRedirect(true);
     e.preventDefault();
     doFetch({

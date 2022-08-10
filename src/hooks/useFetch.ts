@@ -2,15 +2,20 @@ import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import useLocalStorage from "./useLocalStorage";
 
-const useFetch = (url) => {
+interface ArticleResponseType {
+  data: { article: { favoritesCount: number; favorited: boolean } };
+}
+
+const useFetch = (url: string) => {
   const baseUrl = "https://conduit.productionready.io/api";
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState(null);
+  const [response, setResponse] = useState<null | ArticleResponseType>(null);
   const [error, setError] = useState(null);
-  const [options, setOptions] = useState({});
+  type Options = { method: "post" | "put" | "delete" } | {};
+  const [options, setOptions] = useState<Options>({});
   const [token] = useLocalStorage("token");
 
-  const doFetch = useCallback((options = {}) => {
+  const doFetch = useCallback((options: Options = {}) => {
     setOptions(options);
     setIsLoading(true);
   }, []);
@@ -24,6 +29,7 @@ const useFetch = (url) => {
       },
     };
     if (!isLoading) return;
+
     axios(baseUrl + url, requestOptions)
       .then((res) => {
         if (!skipGetResponseAfterDestroy) {
