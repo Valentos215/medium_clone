@@ -13,7 +13,7 @@ const AddToFavorites = ({ isFavorited, favoritesCount, articleSlug }) => {
     ? response.article.favoritesCount
     : favoritesCount;
   const actualIsFavorited = response ? response.article.favorited : isFavorited;
-  const handleLike = (e: React.MouseEvent<HTMLElement>) => {
+  const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!currentUserState.isLoggedIn) setWillRedirect(true);
     e.preventDefault();
     doFetch({
