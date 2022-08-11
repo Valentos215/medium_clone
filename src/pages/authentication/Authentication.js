@@ -15,7 +15,7 @@ const Authentication = (props) => {
   const [username, setUsername] = useState("");
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
   const apiUrl = isLogin ? "users/login" : "/users";
-  const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
+  const { isLoading, response, error, doFetch } = useFetch(apiUrl);
   const [, setToken] = useLocalStorage("token");
   const [, dispatch] = useContext(CurrentUserContext);
 

@@ -2,16 +2,37 @@ import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import useLocalStorage from "./useLocalStorage";
 
-interface ArticleResponseType {
-  data: { article: { favoritesCount: number; favorited: boolean } };
+interface ResponseType {
+  article: { favoritesCount: number; favorited: boolean };
+  user: {
+    image: string;
+    bio: string;
+    username: string;
+    email: string;
+    password: string;
+  };
 }
 
-const useFetch = (url: string) => {
+type Options =
+  | {
+      method: "post" | "put" | "delete";
+      user: { username?: string; email: string; password: string };
+    }
+  | {};
+
+type Error = { errors: { name: string[] } };
+type UseFetchResult = {
+  isLoading: boolean;
+  response: ResponseType | null;
+  error: Error | null;
+  doFetch: (options?: Options) => void;
+};
+
+const useFetch = (url: string): UseFetchResult => {
   const baseUrl = "https://conduit.productionready.io/api";
-  const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState<null | ArticleResponseType>(null);
-  const [error, setError] = useState(null);
-  type Options = { method: "post" | "put" | "delete" } | {};
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [response, setResponse] = useState<ResponseType | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [options, setOptions] = useState<Options>({});
   const [token] = useLocalStorage("token");
 
@@ -49,7 +70,7 @@ const useFetch = (url: string) => {
     };
   }, [isLoading, options, url, token]);
 
-  return [{ isLoading, response, error }, doFetch];
+  return { isLoading, response, error, doFetch };
 };
 
 export default useFetch;

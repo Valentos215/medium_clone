@@ -1,6 +1,6 @@
+import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
-
 import { CurrentUserContext } from "../../contexts/currentUser";
 import useFetch from "../../hooks/useFetch";
 import BackendErrorMessages from "../../components/BackendErrorMessages";
@@ -9,16 +9,16 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 const Settings = () => {
   const [currentUserState, dispatch] = useContext(CurrentUserContext);
   const apiUrl = "/user";
-  const [{ response, error }, doFetch] = useFetch(apiUrl);
-  const [image, setImage] = useState("");
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { response, error, doFetch } = useFetch(apiUrl);
+  const [image, setImage] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [, setToken] = useLocalStorage("token");
   const [isSuccessfullLogout, setIsSuccessfullLogout] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     doFetch({
       method: "put",
@@ -33,7 +33,8 @@ const Settings = () => {
       },
     });
   };
-  const logout = (e) => {
+
+  const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setToken("");
     dispatch({ type: "LOGOUT" });
@@ -41,7 +42,9 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    if (!currentUserState.currentUser) return;
+    if (!currentUserState.currentUser) {
+      return;
+    }
     setUsername(currentUserState.currentUser.username || "");
     setBio(currentUserState.currentUser.bio || "");
     setEmail(currentUserState.currentUser.email || "");
@@ -85,7 +88,7 @@ const Settings = () => {
                   <textarea
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
-                    rows="8"
+                    rows={8}
                     className="form-control form-control-lg"
                     placeholder="Short bio"
                   />

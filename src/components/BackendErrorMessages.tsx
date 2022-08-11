@@ -1,4 +1,8 @@
-const BackendErrorMessages = ({ backendErrors }) => {
+import React from "react";
+
+type BackendErrorProps = { backendErrors: { name: string[] } };
+
+const BackendErrorMessages: React.FC<BackendErrorProps> = (backendErrors) => {
   if (backendErrors) {
     const errorMessages = Object.keys(backendErrors).map((name) => {
       const isArray = Array.isArray(backendErrors[name]);
@@ -6,6 +10,7 @@ const BackendErrorMessages = ({ backendErrors }) => {
       if (name === "message") return backendErrors[name];
       return `${name} ${backendErrors[name]}`;
     });
+
     return (
       <ul className="error-messages">
         {errorMessages.map((errMessage) => (

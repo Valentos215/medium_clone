@@ -7,7 +7,7 @@ const UserProfile = ({ location, match }) => {
   const slug = match.params.slug;
   const isFavorites = location.pathname.includes("favorites");
   const apiUrl = `/profiles/${slug}`;
-  const [{ response }, doFetch] = useFetch(apiUrl);
+  const { response, doFetch } = useFetch(apiUrl);
 
   useEffect(() => {
     doFetch();

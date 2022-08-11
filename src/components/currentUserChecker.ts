@@ -4,7 +4,7 @@ import useFetch from "../hooks/useFetch";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const CurrentUserChecker = ({ children }) => {
-  const [{ response }, doFetch] = useFetch("/user");
+  const { response, doFetch } = useFetch("/user");
   const [, dispatch] = useContext(CurrentUserContext);
   const [token] = useLocalStorage("token");
 

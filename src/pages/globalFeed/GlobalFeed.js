@@ -16,7 +16,7 @@ const GlobalFeed = ({ location, match }) => {
     offset,
   });
   const apiUrl = `/articles?${stringifiedParams}`;
-  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
+  const { response, isLoading, error, doFetch } = useFetch(apiUrl);
 
   useEffect(() => {
     doFetch();

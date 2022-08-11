@@ -1,12 +1,26 @@
+import React from "react";
 import { createContext, useReducer } from "react";
 
-const initialState = {
+type User = { username: string; bio: string; email: string };
+type State = {
+  isLoading: boolean;
+  isLoggedIn?: boolean | null;
+  currentUser: User | null;
+};
+enum ActionType {
+  LOADING = "LOADING",
+  SET_AUTHORIZED = "SET_AUTHORIZED",
+  SET_UNAUTHORIZED = "SET_UNAUTHORIZED",
+  LOGOUT = "LOGOUT",
+}
+type Action = { type: ActionType; payload: User };
+const initialState: State = {
   isLoading: false,
   isLoggedIn: null,
   currentUser: null,
 };
 
-const reducer = (state, action) => {
+const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case "LOADING":
       return { ...state, isLoading: true };
@@ -32,7 +46,7 @@ const reducer = (state, action) => {
   }
 };
 
-export const CurrentUserContext = createContext();
+export const CurrentUserContext = createContext<any>({});
 
 export const CurrentUserProvider = ({ children }) => {
   const value = useReducer(reducer, initialState);

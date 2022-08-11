@@ -6,7 +6,7 @@ import useFetch from "../../hooks/useFetch";
 
 const CreateArticle = () => {
   const apiUrl = "/articles";
-  const [{ response, error }, doFetch] = useFetch(apiUrl);
+  const { response, error, doFetch } = useFetch(apiUrl);
   const [currentUserState] = useContext(CurrentUserContext);
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
   const initialValues = {

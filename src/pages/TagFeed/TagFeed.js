@@ -18,7 +18,7 @@ const TagFeed = ({ location, match }) => {
     tag: tagName,
   });
   const apiUrl = `/articles?${stringifiedParams}`;
-  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
+  const { response, isLoading, error, doFetch } = useFetch(apiUrl);
 
   useEffect(() => {
     doFetch();

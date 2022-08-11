@@ -8,9 +8,12 @@ const EditArticle = ({ match }) => {
   const slug = match.params.slug;
   const [CurrentUserState] = useContext(CurrentUserContext);
   const apiUrl = `/articles/${slug}`;
-  const [{ response: fetchResponse }, doFetch] = useFetch(apiUrl);
-  const [{ response: updateResponse, error: updateError }, doUpdate] =
-    useFetch(apiUrl);
+  const { response: fetchResponse, doFetch } = useFetch(apiUrl);
+  const {
+    response: updateResponse,
+    error: updateError,
+    doUpdate,
+  } = useFetch(apiUrl);
   const [initialValues, setInitialValues] = useState(null);
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
 

@@ -17,8 +17,8 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
 }) => {
   const [willRedirect, setWillRedirect] = useState(false);
   const [currentUserState] = useContext(CurrentUserContext);
-  const apiUrl = `/articles/${articleSlug}/favorite`;
-  const [{ response }, doFetch] = useFetch(apiUrl);
+  const apiUrl: string = `/articles/${articleSlug}/favorite`;
+  const { response, doFetch } = useFetch(apiUrl);
   const actualCount = response
     ? response.article.favoritesCount
     : favoritesCount;

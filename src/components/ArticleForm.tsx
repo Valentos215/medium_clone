@@ -1,21 +1,38 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackendErrorMessages from "./BackendErrorMessages";
 
-const ArticleForm = ({ onSubmit, errors, initialValues }) => {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [description, setDescription] = useState("");
-  const [tagListStr, setTagListStr] = useState("");
+type Article = {
+  title: string;
+  body: string;
+  description: string;
+  tagList: string[];
+};
+type ArticleFormProps = {
+  onSubmit: (article: Article) => void;
+  errors: {} | null;
+  initialValues: Article;
+};
+const ArticleForm: React.FC<ArticleFormProps> = ({
+  onSubmit,
+  errors,
+  initialValues,
+}) => {
+  const [title, setTitle] = useState<string>("");
+  const [body, setBody] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [tagListStr, setTagListStr] = useState<string>("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const tagList = tagListStr.split(" ");
+    const tagList: string[] = tagListStr.split(" ");
     const article = { title, body, description, tagList };
     onSubmit(article);
   };
 
   useEffect(() => {
-    if (!initialValues) return;
+    if (!initialValues) {
+      return;
+    }
     setTitle(initialValues.title);
     setBody(initialValues.body);
     setDescription(initialValues.description);
@@ -51,7 +68,7 @@ const ArticleForm = ({ onSubmit, errors, initialValues }) => {
                 <fieldset className="form-group">
                   <textarea
                     className="form-control"
-                    rows="8"
+                    rows={8}
                     placeholder="Write your article (in markdown)"
                     value={body}
                     onChange={(e) => setBody(e.target.value)}

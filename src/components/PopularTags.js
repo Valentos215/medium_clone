@@ -5,7 +5,7 @@ import ErrorMessage from "./ErrorMessage";
 import Loading from "./Loading";
 
 const PopularTags = () => {
-  const [{ response, isLoading, error }, doFetch] = useFetch("/tags");
+  const { response, isLoading, error, doFetch } = useFetch("/tags");
 
   useEffect(() => {
     doFetch();
