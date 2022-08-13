@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
@@ -5,21 +6,24 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { CurrentUserContext } from "../../contexts/currentUser";
 import BackendErrorMessages from "../../components/BackendErrorMessages";
 
-const Authentication = (props) => {
+type AuthProps = { match: { path: string } };
+
+const Authentication: React.FC<AuthProps> = (props) => {
   const isLogin = props.match.path === "/login";
   const pageTitle = isLogin ? "Sign in" : "Sign Up";
   const descriptionLink = isLogin ? "/register" : "/login";
   const descriptionText = isLogin ? "Need an account?" : "Have an account?";
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
   const apiUrl = isLogin ? "users/login" : "/users";
   const { isLoading, response, error, doFetch } = useFetch(apiUrl);
   const [, setToken] = useLocalStorage("token");
   const [, dispatch] = useContext(CurrentUserContext);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const user = isLogin ? { email, password } : { email, password, username };
     doFetch({
@@ -37,7 +41,9 @@ const Authentication = (props) => {
     dispatch({ type: "SET_AUTHORIZED", payload: response.user });
   }, [response, setToken, dispatch]);
 
-  if (isSuccessfullSubmit) return <Redirect to="/" />;
+  if (isSuccessfullSubmit) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className="auth-page">
       <div className="container page">

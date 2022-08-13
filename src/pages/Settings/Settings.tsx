@@ -6,7 +6,7 @@ import useFetch from "../../hooks/useFetch";
 import BackendErrorMessages from "../../components/BackendErrorMessages";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
-const Settings = () => {
+const Settings: React.FC = () => {
   const [currentUserState, dispatch] = useContext(CurrentUserContext);
   const apiUrl = "/user";
   const { response, error, doFetch } = useFetch(apiUrl);

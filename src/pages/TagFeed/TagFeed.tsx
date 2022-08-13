@@ -1,5 +1,6 @@
+import React from "react";
 import { stringify } from "query-string";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import ErrorMessage from "../../components/ErrorMessage";
 import Feed from "../../components/Feed";
 import FeedToggler from "../../components/FeedToggler";
@@ -9,14 +10,21 @@ import PopularTags from "../../components/PopularTags";
 import useFetch from "../../hooks/useFetch";
 import { getPaginator, limit } from "../../utils";
 
-const TagFeed = ({ location, match }) => {
+type TagFeedProps = {
+  location: { search: string };
+  match: { params: { slug: string }; url: string };
+};
+
+const TagFeed: React.FC<TagFeedProps> = ({ location, match }) => {
   const tagName = match.params.slug;
+
   const { offset, currentPage } = getPaginator(location.search);
   const stringifiedParams = stringify({
     limit,
     offset,
     tag: tagName,
   });
+
   const apiUrl = `/articles?${stringifiedParams}`;
   const { response, isLoading, error, doFetch } = useFetch(apiUrl);
 
@@ -39,7 +47,7 @@ const TagFeed = ({ location, match }) => {
             {isLoading && <Loading />}
             {error && <ErrorMessage />}
             {!isLoading && response && (
-              <Fragment>
+              <>
                 <Feed articles={response.articles} />
                 <Pagination
                   total={response.articlesCount + 1}
@@ -47,7 +55,7 @@ const TagFeed = ({ location, match }) => {
                   url={match.url}
                   currentPage={currentPage}
                 />
-              </Fragment>
+              </>
             )}
           </div>
           <div className="col-md-3">

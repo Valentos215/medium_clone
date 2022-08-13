@@ -1,28 +1,41 @@
+import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import ArticleForm from "../../components/ArticleForm";
 import { CurrentUserContext } from "../../contexts/currentUser";
 import useFetch from "../../hooks/useFetch";
 
-const EditArticle = ({ match }) => {
+type Article = {
+  title: string;
+  description: string;
+  body: string;
+  tagList: string[];
+};
+
+type EditArticleProps = { match: { params: { slug: string } } };
+
+const EditArticle: React.FC<EditArticleProps> = ({ match }) => {
   const slug = match.params.slug;
+
   const [CurrentUserState] = useContext(CurrentUserContext);
   const apiUrl = `/articles/${slug}`;
   const { response: fetchResponse, doFetch } = useFetch(apiUrl);
+  const [initialValues, setInitialValues] = useState<Article | null>(null);
+  const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
   const {
     response: updateResponse,
     error: updateError,
-    doUpdate,
+    doFetch: doUpdate,
   } = useFetch(apiUrl);
-  const [initialValues, setInitialValues] = useState(null);
-  const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
 
   useEffect(() => {
     doFetch();
   }, [doFetch]);
 
   useEffect(() => {
-    if (!fetchResponse) return;
+    if (!fetchResponse) {
+      return;
+    }
     setInitialValues({
       title: fetchResponse.article.title,
       description: fetchResponse.article.description,
@@ -31,7 +44,7 @@ const EditArticle = ({ match }) => {
     });
   }, [fetchResponse]);
 
-  const handleSubmit = (article) => {
+  const handleSubmit = (article: Article) => {
     doUpdate({
       method: "put",
       data: { article },
@@ -50,7 +63,7 @@ const EditArticle = ({ match }) => {
   return (
     <ArticleForm
       onSubmit={handleSubmit}
-      errors={(updateError && updateError) || {}}
+      errors={(updateError && updateError.errors) || null}
       initialValues={initialValues}
     />
   );

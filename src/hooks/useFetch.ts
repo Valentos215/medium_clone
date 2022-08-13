@@ -2,25 +2,44 @@ import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import useLocalStorage from "./useLocalStorage";
 
+type User = {
+  image: string;
+  bio: string;
+  username: string;
+  email: string;
+  password: string;
+  token: string;
+};
+type Article = {
+  slug: string;
+  title: string;
+  body: string;
+  createdAt: string;
+  description: string;
+  favorited: boolean;
+  favoritesCount: number;
+  tagList: string[];
+  author: { username: string; image: string };
+};
 interface ResponseType {
-  article: { favoritesCount: number; favorited: boolean };
-  user: {
-    image: string;
-    bio: string;
-    username: string;
-    email: string;
-    password: string;
-  };
+  article: Article;
+  articles: Article[];
+  articlesCount: number;
+  tags: string[];
+  user: User;
 }
 
 type Options =
   | {
-      method: "post" | "put" | "delete";
-      user: { username?: string; email: string; password: string };
+      method: "get" | "post" | "put" | "delete";
+      data: { user: User; article: Article };
     }
   | {};
 
-type Error = { errors: { name: string[] } };
+type Error =
+  | { errors: { name: { errors: string[] } } }
+  | { errors: { name: { error: string } } };
+
 type UseFetchResult = {
   isLoading: boolean;
   response: ResponseType | null;
@@ -43,12 +62,14 @@ const useFetch = (url: string): UseFetchResult => {
 
   useEffect(() => {
     let skipGetResponseAfterDestroy = false;
+
     const requestOptions = {
       ...options,
       ...{
         headers: { authorization: token ? `Token ${token}` : "" },
       },
     };
+
     if (!isLoading) return;
 
     axios(baseUrl + url, requestOptions)

@@ -1,5 +1,5 @@
 import { stringify } from "query-string";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import ErrorMessage from "../../components/ErrorMessage";
 import Feed from "../../components/Feed";
 import FeedToggler from "../../components/FeedToggler";
@@ -38,7 +38,7 @@ const YourFeed = ({ location, match }) => {
             {isLoading && <Loading />}
             {error && <ErrorMessage />}
             {!isLoading && response && (
-              <Fragment>
+              <>
                 <Feed articles={response.articles} />
                 <Pagination
                   total={response.articlesCount + 1}
@@ -46,7 +46,7 @@ const YourFeed = ({ location, match }) => {
                   url={match.url}
                   currentPage={currentPage}
                 />
-              </Fragment>
+              </>
             )}
           </div>
           <div className="col-md-3">

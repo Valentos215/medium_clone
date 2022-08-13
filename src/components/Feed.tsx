@@ -1,8 +1,23 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import AddToFavorites from "./AddToFavorites";
 import TagList from "./TagList";
 
-const Feed = ({ articles }) => {
+type Article = {
+  slug: string;
+  title: string;
+  createdAt: string;
+  description: string;
+  favorited: boolean;
+  favoritesCount: number;
+  tagList: string[];
+  author: { username: string; image: string };
+};
+type FeedProps = {
+  articles: Article[];
+};
+
+const Feed: React.FC<FeedProps> = ({ articles }) => {
   return (
     <div>
       {articles.map((article, index) => (

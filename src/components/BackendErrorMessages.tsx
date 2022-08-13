@@ -1,6 +1,7 @@
 import React from "react";
 
-type BackendErrorProps = { backendErrors: { name: string[] } };
+type Error = { name: { errors: string[] } } | { name: { error: string } };
+type BackendErrorProps = { backendErrors: Error | null };
 
 const BackendErrorMessages: React.FC<BackendErrorProps> = (backendErrors) => {
   if (backendErrors) {

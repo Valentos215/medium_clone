@@ -1,18 +1,23 @@
+import React from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import useFetch from "../hooks/useFetch.ts";
+import useFetch from "../hooks/useFetch";
 import ErrorMessage from "./ErrorMessage";
 import Loading from "./Loading";
 
-const PopularTags = () => {
+const PopularTags: React.FC = () => {
   const { response, isLoading, error, doFetch } = useFetch("/tags");
 
   useEffect(() => {
     doFetch();
   }, [doFetch]);
 
-  if (isLoading || !response) return <Loading />;
-  if (error) return <ErrorMessage />;
+  if (isLoading || !response) {
+    return <Loading />;
+  }
+  if (error) {
+    return <ErrorMessage />;
+  }
   return (
     <div className="sidebar">
       <p>Popular tags</p>

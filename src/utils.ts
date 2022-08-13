@@ -4,7 +4,7 @@ export const range = (start: number, end: number): number[] => {
   return [...Array(end).keys()].map((el) => el + start);
 };
 
-export const limit = 10;
+export const limit: number = 10;
 
 export const getPaginator = (search: string) => {
   const parsedSearch = parse(search);

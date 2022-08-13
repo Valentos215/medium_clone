@@ -9,9 +9,10 @@ type Article = {
 };
 type ArticleFormProps = {
   onSubmit: (article: Article) => void;
-  errors: {} | null;
-  initialValues: Article;
+  errors: { name: { errors: string[] } } | { name: { error: string } } | null;
+  initialValues: Article | null;
 };
+
 const ArticleForm: React.FC<ArticleFormProps> = ({
   onSubmit,
   errors,
@@ -22,7 +23,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
   const [description, setDescription] = useState<string>("");
   const [tagListStr, setTagListStr] = useState<string>("");
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const tagList: string[] = tagListStr.split(" ");
     const article = { title, body, description, tagList };

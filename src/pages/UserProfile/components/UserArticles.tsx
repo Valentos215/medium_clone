@@ -1,5 +1,6 @@
+import React from "react";
 import { stringify } from "query-string";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import ErrorMessage from "../../../components/ErrorMessage";
 import Feed from "../../../components/Feed";
 import Loading from "../../../components/Loading";
@@ -7,7 +8,23 @@ import Pagination from "../../../components/Pagination";
 import useFetch from "../../../hooks/useFetch";
 import { getPaginator, limit } from "../../../utils";
 
-const getApiUrl = ({ username, offset, isFavorites }) => {
+type UserArticlesProps = {
+  username: string;
+  location: { search: string };
+  isFavorites: boolean;
+  url: string;
+};
+type GetApiUrlProps = {
+  username: string;
+  offset: number;
+  isFavorites: boolean;
+};
+
+const getApiUrl = ({
+  username,
+  offset,
+  isFavorites,
+}: GetApiUrlProps): string => {
   const params = isFavorites
     ? { limit, offset, favorited: username }
     : { limit, offset, author: username };
@@ -15,7 +32,12 @@ const getApiUrl = ({ username, offset, isFavorites }) => {
   return `/articles?${stringify(params)}`;
 };
 
-const UserArticles = ({ username, location, isFavorites, url }) => {
+const UserArticles: React.FC<UserArticlesProps> = ({
+  username,
+  location,
+  isFavorites,
+  url,
+}) => {
   const { offset, currentPage } = getPaginator(location.search);
   const apiUrl = getApiUrl({ username, offset, isFavorites });
   const { response, isLoading, error, doFetch } = useFetch(apiUrl);
@@ -29,7 +51,7 @@ const UserArticles = ({ username, location, isFavorites, url }) => {
       {isLoading && <Loading />}
       {error && <ErrorMessage />}
       {!isLoading && response && (
-        <Fragment>
+        <>
           <Feed articles={response.articles} />
           <Pagination
             total={response.articlesCount + 1}
@@ -37,7 +59,7 @@ const UserArticles = ({ username, location, isFavorites, url }) => {
             url={isFavorites ? `${url}/favorites` : url}
             currentPage={currentPage}
           />
-        </Fragment>
+        </>
       )}
     </div>
   );

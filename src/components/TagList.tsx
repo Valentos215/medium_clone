@@ -1,4 +1,8 @@
-const TagList = ({ tags }) => {
+import React from "react";
+
+type TagListProps = { tags: string[] };
+
+const TagList: React.FC<TagListProps> = ({ tags }) => {
   return (
     <ul className="tag-list">
       {tags.map((tag) => (

@@ -18,8 +18,9 @@ const CurrentUserChecker = ({ children }) => {
   }, [token, doFetch, dispatch]);
 
   useEffect(() => {
-    if (!response) return;
-
+    if (!response) {
+      return;
+    }
     dispatch({ type: "SET_AUTHORIZED", payload: response.user });
   }, [response, dispatch]);
 

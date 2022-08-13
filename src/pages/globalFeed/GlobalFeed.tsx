@@ -1,5 +1,6 @@
+import React from "react";
 import { stringify } from "query-string";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import ErrorMessage from "../../components/ErrorMessage";
 import Feed from "../../components/Feed";
 import FeedToggler from "../../components/FeedToggler";
@@ -9,13 +10,18 @@ import PopularTags from "../../components/PopularTags";
 import useFetch from "../../hooks/useFetch";
 import { getPaginator, limit } from "../../utils";
 
-const GlobalFeed = ({ location, match }) => {
+type GlobalFeedProps = { location: { search: string }; match: { url: string } };
+
+const GlobalFeed: React.FC<GlobalFeedProps> = ({ location, match }) => {
   const { offset, currentPage } = getPaginator(location.search);
+
   const stringifiedParams = stringify({
     limit,
     offset,
   });
+
   const apiUrl = `/articles?${stringifiedParams}`;
+
   const { response, isLoading, error, doFetch } = useFetch(apiUrl);
 
   useEffect(() => {
@@ -37,7 +43,7 @@ const GlobalFeed = ({ location, match }) => {
             {isLoading && <Loading />}
             {error && <ErrorMessage />}
             {!isLoading && response && (
-              <Fragment>
+              <>
                 <Feed articles={response.articles} />
                 <Pagination
                   total={response.articlesCount + 1}
@@ -45,7 +51,7 @@ const GlobalFeed = ({ location, match }) => {
                   url={match.url}
                   currentPage={currentPage}
                 />
-              </Fragment>
+              </>
             )}
           </div>
           <div className="col-md-3">

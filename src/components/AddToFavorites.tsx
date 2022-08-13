@@ -19,10 +19,12 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
   const [currentUserState] = useContext(CurrentUserContext);
   const apiUrl: string = `/articles/${articleSlug}/favorite`;
   const { response, doFetch } = useFetch(apiUrl);
+
   const actualCount = response
     ? response.article.favoritesCount
     : favoritesCount;
   const actualIsFavorited = response ? response.article.favorited : isFavorited;
+
   const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!currentUserState.isLoggedIn) setWillRedirect(true);
     e.preventDefault();
@@ -30,6 +32,7 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
       method: actualIsFavorited ? "delete" : "post",
     });
   };
+
   const buttonClasses = classNames({
     btn: true,
     "btn-sm": true,
@@ -37,7 +40,9 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
     "btn-outline-primary": !actualIsFavorited,
   });
 
-  if (willRedirect) return <Redirect to="/login" />;
+  if (willRedirect) {
+    return <Redirect to="/login" />;
+  }
   return (
     <button className={buttonClasses} onClick={handleLike}>
       <i className="ion-heart"></i>

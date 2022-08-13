@@ -1,3 +1,4 @@
+import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage";
@@ -6,7 +7,9 @@ import TagList from "../../components/TagList";
 import { CurrentUserContext } from "../../contexts/currentUser";
 import useFetch from "../../hooks/useFetch";
 
-const Article = (props) => {
+type ArticleProps = { match: { params: { slug: string } } };
+
+const Article: React.FC<ArticleProps> = (props) => {
   const slug = props.match.params.slug;
   const apiUrl = `/articles/${slug}`;
 
@@ -17,7 +20,7 @@ const Article = (props) => {
     doFetch,
   } = useFetch(apiUrl);
 
-  const { response: deletingResponse, doDelete } = useFetch(apiUrl);
+  const { response: deletingResponse, doFetch: doDelete } = useFetch(apiUrl);
   const [currentUserState] = useContext(CurrentUserContext);
   const [isSuccessfullDelete, setIsSuccessfullDelete] = useState(false);
 
@@ -38,15 +41,19 @@ const Article = (props) => {
   };
 
   useEffect(() => {
-    doFetch();
-  }, [doFetch]);
-
-  useEffect(() => {
-    if (!deletingResponse) return;
+    if (!deletingResponse) {
+      return;
+    }
     setIsSuccessfullDelete(true);
   }, [deletingResponse]);
 
-  if (isSuccessfullDelete) return <Redirect to="/" />;
+  useEffect(() => {
+    doFetch();
+  }, [doFetch]);
+
+  if (isSuccessfullDelete) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className="article-page">
       <div className="banner">

@@ -20,10 +20,11 @@ const initialState: State = {
   currentUser: null,
 };
 
-const reducer = (state: State, action: Action) => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "LOADING":
       return { ...state, isLoading: true };
+
     case "SET_AUTHORIZED":
       return {
         ...state,
@@ -31,16 +32,19 @@ const reducer = (state: State, action: Action) => {
         isLoading: false,
         currentUser: action.payload,
       };
+
     case "SET_UNAUTHORIZED":
       return {
         ...state,
         isLoggedIn: false,
       };
+
     case "LOGOUT":
       return {
         ...initialState,
         isLoggedIn: false,
       };
+
     default:
       return state;
   }
