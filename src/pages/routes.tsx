@@ -23,8 +23,8 @@ const Routes = () => {
       <Route path="/login" component={withSuspense(Authentication)} />
       <Route path="/register" component={withSuspense(Authentication)} />
       <Route path="/settings" component={withSuspense(Settings)} />
-      <Route path="/articles/:slug" component={withSuspense(Article)} exact />
       <Route path="/articles/new" component={withSuspense(CreateArticle)} />
+      <Route path="/articles/:slug" component={withSuspense(Article)} exact />
       <Route
         path="/articles/:slug/edit"
         component={withSuspense(EditArticle)}
