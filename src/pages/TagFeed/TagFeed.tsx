@@ -17,14 +17,12 @@ type TagFeedProps = {
 
 const TagFeed: React.FC<TagFeedProps> = ({ location, match }) => {
   const tagName = match.params.slug;
-
   const { offset, currentPage } = getPaginator(location.search);
   const stringifiedParams = stringify({
     limit,
     offset,
     tag: tagName,
   });
-
   const apiUrl = `/articles?${stringifiedParams}`;
   const { response, isLoading, error, doFetch } = useFetch(apiUrl);
 

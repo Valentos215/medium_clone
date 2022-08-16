@@ -5,6 +5,13 @@ import ArticleForm from "../../components/ArticleForm";
 import { CurrentUserContext } from "../../contexts/currentUser";
 import useFetch from "../../hooks/useFetch";
 
+type Article = {
+  title: string;
+  body: string;
+  description: string;
+  tagList: string[] | null;
+};
+
 const CreateArticle: React.FC = () => {
   const apiUrl = "/articles";
   const { response, error, doFetch } = useFetch(apiUrl);
@@ -18,7 +25,7 @@ const CreateArticle: React.FC = () => {
     tagList: [],
   };
 
-  const handleSubmit = (article) => {
+  const handleSubmit = (article: Article) => {
     doFetch({
       method: "post",
       data: { article },

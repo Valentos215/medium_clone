@@ -27,6 +27,7 @@ interface ResponseType {
   articlesCount: number;
   tags: string[];
   user: User;
+  profile: User;
 }
 
 type Options =
@@ -36,9 +37,7 @@ type Options =
     }
   | {};
 
-type Error =
-  | { errors: { name: { errors: string[] } } }
-  | { errors: { name: { error: string } } };
+type Error = { errors: { name: string[] } } | { errors: { name: string } };
 
 type UseFetchResult = {
   isLoading: boolean;

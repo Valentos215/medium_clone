@@ -1,19 +1,28 @@
+import React from "react";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import Loading from "../../components/Loading";
 import useFetch from "../../hooks/useFetch";
 import UserArticles from "./components/UserArticles";
 
-const UserProfile = ({ location, match }) => {
+type UserProfileProps = {
+  location: { pathname: string; search: string };
+  match: { params: { slug: string }; url: string };
+};
+
+const UserProfile: React.FC<UserProfileProps> = ({ location, match }) => {
   const slug = match.params.slug;
   const isFavorites = location.pathname.includes("favorites");
   const apiUrl = `/profiles/${slug}`;
-  const { response, doFetch } = useFetch(apiUrl);
+  const { isLoading, response, doFetch } = useFetch(apiUrl);
 
   useEffect(() => {
     doFetch();
   }, [doFetch]);
 
-  if (!response) return;
+  if (isLoading || !response) {
+    return <Loading />;
+  }
   return (
     <div className="profile-page">
       <div className="user-info">

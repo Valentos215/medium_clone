@@ -5,11 +5,11 @@ type Article = {
   title: string;
   body: string;
   description: string;
-  tagList: string[];
+  tagList: string[] | null;
 };
 type ArticleFormProps = {
   onSubmit: (article: Article) => void;
-  errors: { name: { errors: string[] } } | { name: { error: string } } | null;
+  errors: { name: string[] } | { name: string } | null;
   initialValues: Article | null;
 };
 
@@ -25,7 +25,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const tagList: string[] = tagListStr.split(" ");
+    const tagList: string[] | null = tagListStr ? tagListStr.split(" ") : null;
     const article = { title, body, description, tagList };
     onSubmit(article);
   };
@@ -37,7 +37,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
     setTitle(initialValues.title);
     setBody(initialValues.body);
     setDescription(initialValues.description);
-    setTagListStr(initialValues.tagList.join(" "));
+    if (initialValues.tagList) setTagListStr(initialValues.tagList.join(" "));
   }, [initialValues]);
 
   return (

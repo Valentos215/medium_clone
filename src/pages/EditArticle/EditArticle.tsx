@@ -9,9 +9,8 @@ type Article = {
   title: string;
   description: string;
   body: string;
-  tagList: string[];
+  tagList: string[] | null;
 };
-
 type EditArticleProps = { match: { params: { slug: string } } };
 
 const EditArticle: React.FC<EditArticleProps> = ({ match }) => {
@@ -52,7 +51,9 @@ const EditArticle: React.FC<EditArticleProps> = ({ match }) => {
   };
 
   useEffect(() => {
-    if (!updateResponse) return;
+    if (!updateResponse) {
+      return;
+    }
     setIsSuccessfullSubmit(true);
   }, [updateResponse]);
 

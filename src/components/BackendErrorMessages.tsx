@@ -1,9 +1,12 @@
 import React from "react";
 
-type Error = { name: { errors: string[] } } | { name: { error: string } };
-type BackendErrorProps = { backendErrors: Error | null };
+type BackendErrorsProps = {
+  backendErrors: { name: string[] } | { name: string };
+};
 
-const BackendErrorMessages: React.FC<BackendErrorProps> = (backendErrors) => {
+const BackendErrorMessages: React.FC<BackendErrorsProps> = ({
+  backendErrors,
+}) => {
   if (backendErrors) {
     const errorMessages = Object.keys(backendErrors).map((name) => {
       const isArray = Array.isArray(backendErrors[name]);

@@ -1,3 +1,4 @@
+import React from "react";
 import { stringify } from "query-string";
 import { useEffect } from "react";
 import ErrorMessage from "../../components/ErrorMessage";
@@ -9,13 +10,20 @@ import PopularTags from "../../components/PopularTags";
 import useFetch from "../../hooks/useFetch";
 import { getPaginator, limit } from "../../utils";
 
-const YourFeed = ({ location, match }) => {
+type YourFeedProps = {
+  location: { search: string };
+  match: { params: { slug: string }; url: string };
+};
+
+const YourFeed: React.FC<YourFeedProps> = ({ location, match }) => {
   const tagName = match.params.slug;
   const { offset, currentPage } = getPaginator(location.search);
+
   const stringifiedParams = stringify({
     limit,
     offset,
   });
+
   const apiUrl = `/articles/feed?${stringifiedParams}`;
   const { response, isLoading, error, doFetch } = useFetch(apiUrl);
 
